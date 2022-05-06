@@ -20,4 +20,8 @@ export type ResponseType = {
    * Vector de notas en caso de que el comando las devuelva.
    */
   notes?: NotasType[];
+  /**
+   * Descripción del error en caso de que el comando falle.
+   */
+  error?: string;
 }

@@ -7,11 +7,11 @@ export type NotasType = {
    */
   title: string;
   /**
-   * Contenido de la nota.
-   */
-  body: string;
-  /**
    * Color de la nota.
    */
   color: string;
+  /**
+   * Contenido de la nota.
+   */
+  body?: string;
 }

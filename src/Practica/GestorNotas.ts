@@ -2,6 +2,7 @@ import {Notas} from './Notas';
 
 import chalk = require("chalk");
 import * as fs from 'fs';
+import { NotasType } from './TypesMessages/NotasType';
 
 /**
  * Clase Gestor de Notas.
@@ -19,18 +20,18 @@ export class GestorNotas {
    * @param Notes Nota a añadir
    * @returns Mensaje informativo
    */
-  addNotes(nameUser:string, Notes:Notas):boolean {
+  addNotes(nameUser:string, Notes:Notas):[boolean, string] {
     let archiveRoute:string = './AppDataBase/' + nameUser;
     if (fs.existsSync(`${archiveRoute}`)) {
       console.log(chalk.black.bgGreenBright('Bienvenido de vuelta usuario', nameUser));
       archiveRoute = archiveRoute + "/" + Notes.getTitle() + ".json";
       if (fs.existsSync(`${archiveRoute}`)) {
         console.log(chalk.black.bgRedBright('Error, la nota ya existe.'));
-        return false;
+        return [false, "Error, la nota ya existe."];
       } else {
         fs.writeFileSync(`${archiveRoute}`, Notes.toString());
         console.log(chalk.black.bgGreenBright('Se ha creado la nota satisfactoriamente'));
-        return true;
+        return [true, "Se ha creado la nota satisfactoriamente"];
       }
     } else {
       console.log(chalk.black.bgGreenBright("Usuario Nuevo, bienvenido ", nameUser));
@@ -38,7 +39,7 @@ export class GestorNotas {
       archiveRoute = archiveRoute + "/" + Notes.getTitle() + ".json";
       fs.writeFileSync(`${archiveRoute}`, Notes.toString());
       console.log(chalk.black.bgGreenBright('Se ha creado la nota satisfactoriamente'));
-      return true;
+      return [true, "Se ha creado la nota satisfactoriamente"];
     }
   }
 
@@ -48,16 +49,16 @@ export class GestorNotas {
    * @param modifyNote Nota modificada
    * @returns mensaje informativo
    */
-  modifyNote(nameUser:string, modifyNote:Notas) {
+  modifyNote(nameUser:string, modifyNote:Notas):[boolean, string] {
     let archiveRoute: string = './AppDataBase/' + nameUser;
     archiveRoute = archiveRoute + "/" + modifyNote.getTitle() + ".json";
     if (fs.existsSync(`${archiveRoute}`)) {
       fs.writeFileSync(`${archiveRoute}`, modifyNote.toString());
       console.log(chalk.black.bgGreenBright('La nota se ha modificado satisfactoriamente'));
-      return 'correcto';
+      return [true, "La nota se ha modificado satisfactoriamente"];
     } else {
       console.log(chalk.black.bgRedBright('La nota que desea modificar no existe'));
-      return 'error';
+      return [false, "La nota que desea modificar no existe"];
     }
   }
 
@@ -67,16 +68,16 @@ export class GestorNotas {
    * @param noteTilte Titulo de la nota a eliminar
    * @returns mensaje informativo
    */
-  deleteNote(nameUser:string, noteTilte:string) {
+  deleteNote(nameUser:string, noteTilte:string):[boolean, string] {
     let archiveRoute: string = './AppDataBase/' + nameUser;
     archiveRoute = archiveRoute + "/" + noteTilte + ".json";
     if (fs.existsSync(`${archiveRoute}`)) {
       fs.rmSync(`${archiveRoute}`);
       console.log(chalk.black.bgGreenBright('La nota se ha eliminado correctamente'));
-      return 'correcto';
+      return [true, "La nota se ha eliminado correctamente"];
     } else {
       console.log(chalk.black.bgRedBright('Error dicha nota no existe'));
-      return 'error';
+      return [false, "Error dicha nota no existe"];
     }
   }
 
@@ -85,21 +86,27 @@ export class GestorNotas {
    * @param nameUser nombre del usuario
    * @returns mensaje informativo.
    */
-  listTitles(nameUser:string):string {
+  listTitles(nameUser: string): [boolean, string, NotasType[]] {
     let archiveRoute:string = './AppDataBase/' + nameUser;
     if (fs.existsSync(`${archiveRoute}`)) {
       console.log(chalk.black.bgGreenBright('Las notas con sus títulos son:'));
       archiveRoute += "/";
+      const nameFilesAndColors:NotasType[] = [];
       const namefiles = fs.readdirSync(`${archiveRoute}`);
       namefiles.forEach((fileName) => {
         const fileContent = fs.readFileSync( archiveRoute + fileName);
         const json = JSON.parse(fileContent.toString());
         this.printWithColor(json.color, json.title);
+        const nota:NotasType = {
+          title: json.title,
+          color: json.color,
+        };
+        nameFilesAndColors.push(nota);
       });
-      return 'correcto';
+      return [true, "El usuario tiene notas.", nameFilesAndColors];
     } else {
       console.log(chalk.black.bgRedBright('El usuario no existe'));
-      return 'error';
+      return [false, "El usuario no existe", []];
     }
   }
 
@@ -109,13 +116,14 @@ export class GestorNotas {
    * @param noteTilte titulo de la canción a utilizar
    * @returns mensaje informativo
    */
-  listNote(nameUser:string, noteTilte:string) {
+  listNote(nameUser: string, noteTilte: string): [boolean, string, NotasType[]] {
     noteTilte += ".json";
     let archiveRoute: string = './AppDataBase/' + nameUser;
     let flag:boolean = false;
     if (fs.existsSync(`${archiveRoute}`)) {
       archiveRoute += "/";
       const namefiles = fs.readdirSync(`${archiveRoute}`);
+      const notes:NotasType[] = [];
       namefiles.forEach((fileName) => {
         if (noteTilte == fileName) {
           console.log(chalk.black.bgGreenBright('La nota es: '));
@@ -124,18 +132,24 @@ export class GestorNotas {
           this.printWithColor(json.color, json.title);
           this.printWithColor(json.color, json.body);
           this.printWithColor(json.color, json.color);
+          const nota: NotasType = {
+            title: json.title,
+            color: json.color,
+            body: json.body,
+          };
+          notes.push(nota);
           flag = true;
         }
       });
       if (flag) {
-        return 'correcto';
+        return [true, "La nota se ha listado correctamente", notes];
       } else {
         console.log(chalk.black.bgRedBright('El usuario no tiene ninguna nota con ese nombre'));
-        return 'error';
+        return [false, "El usuario no tiene ninguna nota con ese nombre", []];
       }
     } else {
       console.log(chalk.black.bgRedBright('El usuario no existe'));
-      return 'error';
+      return [false, "El usuario no existe", []];
     }
   }
 
