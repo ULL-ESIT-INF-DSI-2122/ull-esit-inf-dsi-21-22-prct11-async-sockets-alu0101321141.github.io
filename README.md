@@ -6,8 +6,8 @@
 ## Calidad y seguridad del código fuente mediante Sonar Cloud
 
 <p align="center">
-    <a href="https://github.com/ULL-ESIT-INF-DSI-2122/github-actions-sonar-cloud/blob/master/LICENSE">
-        <img alt="GitHub" src="https://img.shields.io/github/license/ULL-ESIT-INF-DSI-2122/github-actions-sonar-cloud">
+    <a href="https://coveralls.io/github/ULL-ESIT-INF-DSI-2122/ull-esit-inf-dsi-21-22-prct11-async-sockets-alu0101321141.github.io?branch=main">
+        <img alt="Coveralls" src="https://coveralls.io/repos/github/ULL-ESIT-INF-DSI-2122/ull-esit-inf-dsi-21-22-prct11-async-sockets-alu0101321141.github.io/badge.svg?branch=main' alt='Coverage Status">
     </a>
 </p>
 
