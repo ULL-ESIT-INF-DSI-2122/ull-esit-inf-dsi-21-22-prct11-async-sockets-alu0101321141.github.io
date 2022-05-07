@@ -18,6 +18,15 @@ export class Cliente {
   constructor(private port:number) {
     this.socket = net.connect({ port: this.port });
   }
+
+  /**
+   * getter
+   * @returns socket
+   */
+  getSocket():net.Socket {
+    return this.socket;
+  }
+
   /**
    * Envia la peticion al servidor.
    * @param type tipo de mensaje

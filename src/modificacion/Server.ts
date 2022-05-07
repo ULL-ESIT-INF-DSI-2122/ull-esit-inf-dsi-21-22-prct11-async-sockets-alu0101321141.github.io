@@ -3,7 +3,7 @@ import chalk = require("chalk");
 import { ResponseType } from "./TypesMessages/ResponseType";
 import { spawn } from 'child_process';
 
-net.createServer({ allowHalfOpen: true }, (connection) => {
+export const server = net.createServer({ allowHalfOpen: true }, (connection) => {
   console.log(chalk.black.bgGreenBright('Cliente conectado.'));
   connection.on('error', (err) => {
     console.log(chalk.black.bgRedBright('Error Creación server:', err));
@@ -46,6 +46,6 @@ net.createServer({ allowHalfOpen: true }, (connection) => {
       console.log(chalk.black.bgRedBright('Error: El tipo de mensaje no es correcto.'));
     }
   });
-}).listen(60300, () => {
+}).listen(60301, () => {
   console.log(chalk.black.bgGreenBright('Servidor iniciado.'));
 });
