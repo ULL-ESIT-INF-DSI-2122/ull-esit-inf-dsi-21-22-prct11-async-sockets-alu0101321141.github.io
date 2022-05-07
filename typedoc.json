@@ -1,6 +1,19 @@
 {
   "entryPoints": [
-    "./src/basicFunctions.ts"
+    "./src/modificacion/TypesMessages/RequestType.ts",
+    "./src/modificacion/TypesMessages/ResponseType.ts",
+    "./src/modificacion/Client.ts",
+    "./src/modificacion/Command-app.ts",
+    "./src/modificacion/Server.ts",
+    "./src/Practica/typesMessages/RequestType.ts",
+    "./src/Practica/typesMessages/ResponseType.ts",
+    "./src/Practica/typesMessages/NotasType.ts",
+    "./src/Practica/App-Notas.ts",
+    "./src/Practica/Cliente.ts",
+    "./src/Practica/GestorNotas.ts",
+    "./src/Practica/Launcher-Server.ts",
+    "./src/Practica/Notas.ts",
+    "./src/Practica/Server.ts"
   ],
   "out": "./docs"
 }
