@@ -1,5 +1,4 @@
 import chalk = require("chalk");
-import { NotasType } from "./TypesMessages/NotasType";
 
 /**
  * Clase Notas.
@@ -65,19 +64,6 @@ export class Notas {
    */
   setColor(newColor: string) {
     this.color = this.checkColor(newColor);
-  }
-
-  /**
-   * NotasType.
-   * @returns La nota pasada a formato de mensaje.
-   */
-  toNotasType():NotasType {
-    const nota:NotasType = {
-      title: `${this.title}`,
-      body: `${this.body}`,
-      color: `${this.color}`,
-    };
-    return nota;
   }
 
   /**
