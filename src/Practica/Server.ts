@@ -31,6 +31,14 @@ export class Server {
   }
 
   /**
+   * getter
+   * @returns server
+   */
+  getServer(): net.Server {
+    return this.server;
+  }
+
+  /**
    * Método que recibe las peticiones del cliente y las procesa.
    */
   onHold() {
